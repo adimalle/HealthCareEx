@@ -1,0 +1,42 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    </head>
+    <body>
+        <div class="container">
+<div class="card">
+<div class="card-header bg-info text-white text-center">
+    <h2>Specialization Data</h2>
+</div>
+<div class="card-body">
+    <table class="table table-hover">
+    <tr>
+        <th>ID</th>
+        <th>CODE</th>
+        <th>NAME</th>
+        <th>NOTE</th>
+        <th>operation</th>
+
+    </tr>
+    <tr th:each="ob:${list}">
+        <td th:text="${ob.id}"></td>
+        <td th:text="${ob.specCode}"></td>
+        <td th:text="${ob.specName}"></td>
+        <td th:text="${ob.specNote}"></td>
+        <td>
+            <a>Delete</a> || <a>Edit</a>
+        </td>
+    </tr>
+</table>
+</div>
+
+<div class="card-footer">
+<span>message</span>
+</div>
+</div>
+        </div>
+    </body>
+</html>
