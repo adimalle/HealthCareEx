@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class Specialization {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name="spec_id_col")
 	private Long id;
 	

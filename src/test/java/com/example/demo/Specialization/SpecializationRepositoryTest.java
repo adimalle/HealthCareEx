@@ -1,12 +1,8 @@
 package com.example.demo.Specialization;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
-
-import org.junit.jupiter.api.ClassOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -24,26 +20,18 @@ import com.example.demo.repo.SpecializationRepository;
 @Rollback(false)
 @TestMethodOrder(org.junit.jupiter.api.MethodOrderer.OrderAnnotation.class)
 public class SpecializationRepositoryTest {
-
-	@Autowired
+    @Autowired
 	private SpecializationRepository repo;
-
 /**
  * 1.test save operation
- */
-	
-	@Test
+ */	@Test
 	@Order(1)
 	public void spectestCreate() {
 		
 		Specialization spec=new Specialization(null,"CRDLS","Cardiologist","they are experties in blood vessels");
 	       spec=repo.save(spec);
 	       assertNotNull(spec.getId(),"Spec is not Created!");
-	
 	}
-	
-	
-	
 	/**
 	 * 2.to display all operation
 	 */
@@ -57,13 +45,4 @@ public class SpecializationRepositoryTest {
 		}
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-}
+	}
