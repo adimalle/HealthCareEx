@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.Specialization;
 import com.example.demo.service.ISpecializationService;
+
+import aj.org.objectweb.asm.Attribute;
 
 @Controller
 @RequestMapping("/spec")
@@ -40,12 +44,41 @@ public class SpecializationController {
 	 * 3.display all specializations
 	 */
 	@GetMapping("/all")
-	public String viewall(Model model) {
+	public String viewall(Model model,@RequestParam(value = "message",required = false) String message) {
 		
 		List<Specialization> list= service.getAllSpecializations();
 		model.addAttribute("list",list);
+		model.addAttribute("message",message);
 		return "Specialization";
 		}
+	/**
+	 * 4.delete by id
+	 */
+	@GetMapping("/delete")
+	public String deleteData(@RequestParam Long id,RedirectAttributes attributes) {
+		service.removeSpecialization(id);
+		attributes.addAttribute("message","record("+id+") is remove here");
+		return"redirect:all";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
