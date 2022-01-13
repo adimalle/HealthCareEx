@@ -27,8 +27,25 @@ $(document).ready(function(){
                                        specCodeError=false;
                                    }
                                    else{
-                                    $("#specCodeError").hide();
-                                    specCodeError=true;
+                                 $.ajax({
+	                          url:'checkCode',
+                              data:{"code":val},
+                              success:function(respTxt){
+	                           if(respTxt!=''){
+		                               $("#specCodeError").show();
+                                       $("#specCodeError").html(respTxt); 
+                                       $("#specCodeError").css('color','red');
+                                       specCodeError=false;
+                              	}
+                              	else{
+		                              $("#specCodeError").hide();
+                                      
+                                       specCodeError=true;
+	                                 }
+                                     } 
+
+                               });
+
                                    }
           return specCodeError;
       }

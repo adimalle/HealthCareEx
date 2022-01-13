@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.Specialization;
+import com.example.demo.exception.SpecializationNotFoundException;
 import com.example.demo.service.ISpecializationService;
 
 import aj.org.objectweb.asm.Attribute;
@@ -56,10 +58,84 @@ public class SpecializationController {
 	 */
 	@GetMapping("/delete")
 	public String deleteData(@RequestParam Long id,RedirectAttributes attributes) {
-		service.removeSpecialization(id);
-		attributes.addAttribute("message","record("+id+") is remove here");
+		try {
+			service.removeSpecialization(id);
+			attributes.addAttribute("message","record("+id+") is remove here");
+			
+		} catch (SpecializationNotFoundException e) {
+         e.printStackTrace();
+         attributes.addAttribute("message",e.getMessage());
+		}
+		
 		return"redirect:all";
 	}
+	
+	
+	/**
+	 * 5.fetch data into edit page
+	 */
+	@GetMapping("/edit")
+	public String showEditPage(@RequestParam Long id,Model model,RedirectAttributes attributes)
+	{
+		String page=null;
+		try {
+			Specialization spec= service.getOneSpecialization(id);
+			model.addAttribute("specialization",spec);
+			page="SpecializationEdit";
+		} catch (SpecializationNotFoundException e) {
+			e.printStackTrace();
+			attributes.addAttribute("message",e.getMessage());
+			page="redirect:all";
+		}
+		
+		return page;
+	}
+	/**
+	 * 6.update form data redirect all
+	 */
+	@PostMapping("/update")
+	public String updatedata(@ModelAttribute Specialization specialization,RedirectAttributes attributes) {
+		
+		service.saveSpecialization(specialization);
+		attributes.addAttribute("message","record("+specialization.getId()+") is created");
+		
+		return"redirect:all";
+	}
+	
+	/**
+	 * 7.read code and check with service
+	 * return message back to UI
+	 */
+	@GetMapping("checkCode")
+    @ResponseBody
+	public String validateSpecCode(@RequestParam String code) {
+		
+		String message="";
+		if(service.isSpecCodeExit(code)) {
+			message=code+" already exist";
+		}
+		return message;
+	}
+    /**
+     * 8.
+     */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
