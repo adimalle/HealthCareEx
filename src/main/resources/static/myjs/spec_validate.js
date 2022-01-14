@@ -27,9 +27,15 @@ $(document).ready(function(){
                                        specCodeError=false;
                                    }
                                    else{
+	                         var id=0;//for register
+                             if($("#id").val()!=undefined){// edit page
+	                          specCodeError=true;
+                              id=$("#id").val();  
+                                 }    
+
                                  $.ajax({
 	                          url:'checkCode',
-                              data:{"code":val},
+                              data:{"code":val,"id":id},
                               success:function(respTxt){
 	                           if(respTxt!=''){
 		                               $("#specCodeError").show();

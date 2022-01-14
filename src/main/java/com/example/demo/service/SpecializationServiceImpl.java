@@ -40,7 +40,7 @@ public class SpecializationServiceImpl implements ISpecializationService{
 //		if(opt.isPresent()) {
 //			return opt.get();
 //		} else
-//		throw new SpecializationNotFoundException(id+"Not Fouond");
+//		throw new SpecializationNotFoundException(id+"Not Found");
 	   return repo.findById(id).orElseThrow(()->new SpecializationNotFoundException(id+"not found"));
 	}
 
@@ -59,5 +59,14 @@ public class SpecializationServiceImpl implements ISpecializationService{
 //			return false;
 		return repo.getSpecCodeCount(specCode)>0;
 	}
+
+	@Override
+	public boolean isSpecCodeExitForEdit(String specCode, Integer id) {
+		
+		return repo.getSpecCodeCountForEdit(specCode, id)>0;
+	}
+
+	
+	
 
 }
